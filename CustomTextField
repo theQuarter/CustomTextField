@@ -1,0 +1,83 @@
+// ignore_for_file: file_names, prefer_if_null_operators
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class CustomTextField extends StatelessWidget {
+  final String hintText;
+  final String? label;
+  final TextEditingController ctrl;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+  final bool? borderStatus;
+  final Color? color;
+  final bool? suffixIcon;
+  final List<TextInputFormatter>? inputFormatters;
+
+  const CustomTextField(
+      {Key? key,
+      required this.hintText,
+      this.label,
+      required this.ctrl,
+      this.validator,
+      this.keyboardType,
+      this.borderStatus,
+      this.suffixIcon,
+      this.color,
+      this.inputFormatters})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Padding(
+        //   padding: EdgeInsets.only(top: 10, bottom: 10),
+        //   child: Text(
+        //     widget.label.toString(),
+        //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        //   ),
+        // ),
+        TextFormField(
+          // focusNode: FocusNode(),
+          controller: ctrl,
+          keyboardType: keyboardType,
+          inputFormatters: inputFormatters,
+          validator: validator,
+          decoration: InputDecoration(
+            suffixIcon: suffixIcon == true
+                ? Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Image.asset(
+                      "assets/icons/Search.png",
+                      height: 14,
+                      width: 14,
+                      //scale: 80,
+                    ),
+                  )
+                : null,
+            // errorText: borderStatus == true ? "Error shown" : "",
+            hintText: hintText,
+            filled: true,
+            fillColor: color == null ? Colors.white : color,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 18.0,
+              vertical: 1.0,
+            ),
+            border: OutlineInputBorder(
+              // borderSide: BorderSide(color: Color.fromARGB(255, 255, 37, 22)),
+              //BorderSide.none,
+              borderSide: borderStatus == false
+                  ? BorderSide.none
+                  : const BorderSide(
+                      color: Colors.red, width: 1.0, style: BorderStyle.solid),
+              borderRadius: BorderRadius.circular(6),
+              // borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
